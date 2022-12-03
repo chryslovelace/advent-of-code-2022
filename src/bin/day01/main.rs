@@ -8,6 +8,7 @@ fn main() {
             elf += line.parse::<u32>().unwrap();
         }
     }
+    elves.push(elf);
     elves.sort_by(|a, b| b.cmp(a));
     println!("*  {}", elves[0]);
     println!("** {}", elves[0] + elves[1] + elves[2]);
