@@ -9,7 +9,7 @@ fn main() {
             let (opp, _, me) = line.chars().next_tuple().unwrap();
             (opp, me)
         })
-        .collect::<Vec<_>>();
+        .collect();
     println!("*  {}", part1(&strats));
     println!("** {}", part2(&strats));
 }
