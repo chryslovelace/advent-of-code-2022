@@ -5,9 +5,9 @@ fn main() {
 }
 
 fn part1(input: &str) -> u32 {
-    let mut score = 0;
-    for strat in input.lines() {
-        score += match strat {
+    input
+        .lines()
+        .map(|strat| match strat {
             "A X" => 4,
             "A Y" => 8,
             "A Z" => 3,
@@ -18,15 +18,14 @@ fn part1(input: &str) -> u32 {
             "C Y" => 2,
             "C Z" => 6,
             _ => panic!(),
-        };
-    }
-    score
+        })
+        .sum()
 }
 
 fn part2(input: &str) -> u32 {
-    let mut score = 0;
-    for strat in input.lines() {
-        score += match strat {
+    input
+        .lines()
+        .map(|strat| match strat {
             "A X" => 3,
             "A Y" => 4,
             "A Z" => 8,
@@ -37,7 +36,6 @@ fn part2(input: &str) -> u32 {
             "C Y" => 6,
             "C Z" => 7,
             _ => panic!(),
-        };
-    }
-    score
+        })
+        .sum()
 }
