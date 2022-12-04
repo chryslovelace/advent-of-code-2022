@@ -1,14 +1,14 @@
 use itertools::Itertools;
 
-type Section = std::ops::RangeInclusive<u32>;
+type Section = std::ops::RangeInclusive<u8>;
 
 fn main() {
     let input: Vec<(Section, Section)> = include_str!("input.txt")
         .lines()
         .map(|line| {
             let mut ids = line.split([',', '-']).map(|n| n.parse().unwrap());
-            let elf1: (u32, u32) = ids.next_tuple().unwrap();
-            let elf2: (u32, u32) = ids.next_tuple().unwrap();
+            let elf1: (_, _) = ids.next_tuple().unwrap();
+            let elf2: (_, _) = ids.next_tuple().unwrap();
             (elf1.0..=elf1.1, elf2.0..=elf2.1)
         })
         .collect();
