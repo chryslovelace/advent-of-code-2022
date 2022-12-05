@@ -47,11 +47,22 @@ fn main() {
     part2(stacks, &instructions);
 }
 
+fn borrow_two<T>(slice: &mut [T], i: usize, j: usize) -> (&mut T, &mut T) {
+    assert!(i != j);
+    if i < j {
+        let (left, right) = slice.split_at_mut(i + 1);
+        (&mut left[i], &mut right[j - i - 1])
+    } else {
+        let (x, y) = borrow_two(slice, j, i);
+        (y, x)
+    }
+}
+
 fn part1(mut stacks: Stacks, instructions: &[Inst]) {
     for Inst { n, from, to } in instructions {
+        let (from, to) = borrow_two(&mut stacks, from - 1, to - 1);
         for _ in 0..*n {
-            let c = stacks[from - 1].pop().unwrap();
-            stacks[to - 1].push(c);
+            to.push(from.pop().unwrap());
         }
     }
     print!("*  ");
@@ -63,11 +74,8 @@ fn part1(mut stacks: Stacks, instructions: &[Inst]) {
 
 fn part2(mut stacks: Stacks, instructions: &[Inst]) {
     for Inst { n, from, to } in instructions {
-        let moving = {
-            let from = &mut stacks[from - 1];
-            from.drain(from.len() - n..).collect_vec()
-        };
-        stacks[to - 1].extend(moving.into_iter())
+        let (from, to) = borrow_two(&mut stacks, from - 1, to - 1);
+        to.extend(from.drain(from.len() - n..));
     }
     print!("** ");
     for stack in &stacks {
