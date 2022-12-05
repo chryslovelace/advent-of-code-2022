@@ -19,14 +19,19 @@ fn main() {
 fn part1(sections: impl Iterator<Item = (Section, Section)>) -> usize {
     sections
         .filter(|(elf1, elf2)| {
-            (elf1.contains(elf2.start()) && elf1.contains(elf2.end()))
-                || (elf2.contains(elf1.start()) && elf2.contains(elf1.end()))
+            elf1.contains(elf2.start()) && elf1.contains(elf2.end())
+                || elf2.contains(elf1.start()) && elf2.contains(elf1.end())
         })
         .count()
 }
 
 fn part2(sections: impl Iterator<Item = (Section, Section)>) -> usize {
     sections
-        .filter(|(elf1, elf2)| elf1.clone().any(|x| elf2.contains(&x)))
+        .filter(|(elf1, elf2)| {
+            elf1.contains(elf2.start())
+                || elf1.contains(elf2.end())
+                || elf2.contains(elf1.start())
+                || elf2.contains(elf1.end())
+        })
         .count()
 }
